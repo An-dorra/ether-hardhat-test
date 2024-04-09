@@ -1,12 +1,22 @@
 require("dotenv").config();
 const { RPC_URL, PRIVATE_KEY } = process.env;
+// require("./encryptKey");
 const ethers = require("ethers");
 const fs = require("fs");
 const path = require("path");
 
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
-  const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+  // const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+  const walletEncryptJson = fs.readFileSync(
+    path.resolve(__dirname, "./encryptKey.json"),
+    "utf8"
+  );
+  let wallet = new ethers.Wallet.fromEncryptedJsonSync(
+    walletEncryptJson,
+    process.env.PRIVATE_KEY_PASSWORD
+  );
+  wallet = wallet.connect(provider);
   const abi = fs.readFileSync(
     path.resolve(__dirname, "./SimpleStorage_sol_SimpleStorage.abi"),
     "utf8"
