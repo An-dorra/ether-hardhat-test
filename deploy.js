@@ -5,6 +5,8 @@ const ethers = require("ethers");
 const fs = require("fs");
 const path = require("path");
 
+console.log(RPC_URL);
+
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
   // const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
@@ -29,6 +31,8 @@ async function main() {
   const contractFactory = new ethers.ContractFactory(abi, binary, wallet);
   console.log("Deploying, please wait...");
   const contract = await contractFactory.deploy();
+
+  console.log(`Contract Address: ${contract.address}`);
   // const transactionReceipt = await contract.deployTransaction.wait(1); //交易回执
   const currFavoriteNumber = await contract.retrieve();
   console.log(`Current Favorite Number: ${currFavoriteNumber.toString()}`);
