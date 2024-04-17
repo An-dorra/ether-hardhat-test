@@ -1,9 +1,9 @@
-require("@nomicfoundation/hardhat-toolbox");
-require("@nomicfoundation/hardhat-verify");
-
-require("dotenv").config();
-require("hardhat-coverage");
-require("./task/block_number");
+import "@nomicfoundation/hardhat-toolbox";
+import "@nomicfoundation/hardhat-verify";
+import "dotenv/config";
+import "hardhat-coverage";
+import "./task/block_number";
+import "@typechain/hardhat";
 const { PRIVATE_KEY, RPC_URL, VERIFY_APP_KEYS, COINMARKETCAP_API_KEY } =
   process.env;
 

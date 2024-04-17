@@ -16,3 +16,4 @@ node_modules
 /coverage.json
 gas-reporter.txt
 coverage
+typechain-types

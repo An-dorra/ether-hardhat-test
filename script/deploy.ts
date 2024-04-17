@@ -1,15 +1,18 @@
-const { ethers, run, network } = require("hardhat");
-
+import { ethers, run, network } from "hardhat";
+import { SimpleStorage, SimpleStorage__factory } from "../typechain-types";
 async function main() {
-  const SimpleStorageFactory = await ethers.getContractFactory("SimpleStorage");
-  const simpleStorage = await SimpleStorageFactory.deploy();
+  const SimpleStorageFactory: SimpleStorage__factory =
+    (await ethers.getContractFactory(
+      "SimpleStorage"
+    )) as SimpleStorage__factory;
+  const simpleStorage = (await SimpleStorageFactory.deploy()) as SimpleStorage;
   await simpleStorage.getDeployedCode();
   console.log(simpleStorage.target); //ethers v6的写法
   // if (network.config.chainId === 11155111 && process.env.VERIFY_APP_KEYS) {
   //   await simpleStorage.deploymentTransaction().wait(6);
   //   await verify(simpleStorage.target, []);
   // }
-  await simpleStorage.deploymentTransaction().wait(1);
+  await simpleStorage.deploymentTransaction()!.wait(1);
   const currFavoriteNumber = await simpleStorage.retrieve();
   console.log(`Current Favorite Number: ${currFavoriteNumber.toString()}`);
 
@@ -20,14 +23,14 @@ async function main() {
   // await simpleStorage.deploy();
 }
 
-async function verify(contractAddress, args) {
+async function verify(contractAddress: string, args: any[]) {
   console.log("Verifying contract...");
   try {
     await run("verify:verify", {
       address: contractAddress,
       constructorArguments: args,
     });
-  } catch (e) {
+  } catch (e: any) {
     if (e.message.toLowerCase().includes("already verified")) {
       console.log("Verified already");
     } else {

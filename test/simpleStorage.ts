@@ -1,9 +1,11 @@
-const { ethers } = require("hardhat");
-const { assert, expect } = require("chai");
+import { ethers } from "hardhat";
+import { assert, expect } from "chai";
+import { SimpleStorage, SimpleStorage__factory } from "../typechain-types";
 
 describe("SimpleStorage", () => {
   //beforeEach 每个测试之前执行
-  let simpleStorageFactory, simpleContract;
+  let simpleStorageFactory: SimpleStorage__factory,
+    simpleContract: SimpleStorage;
   beforeEach(async () => {
     simpleStorageFactory = await ethers.getContractFactory("SimpleStorage");
     simpleContract = await simpleStorageFactory.deploy();
