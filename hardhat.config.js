@@ -2,9 +2,10 @@ require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-verify");
 
 require("dotenv").config();
-
+require("hardhat-coverage");
 require("./task/block_number");
-const { PRIVATE_KEY, RPC_URL, VERIFY_APP_KEYS } = process.env;
+const { PRIVATE_KEY, RPC_URL, VERIFY_APP_KEYS, COINMARKETCAP_API_KEY } =
+  process.env;
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -23,5 +24,12 @@ module.exports = {
   },
   etherscan: {
     apiKey: VERIFY_APP_KEYS,
+  },
+  gasReporter: {
+    enabled: true,
+    outputFile: "gas-reporter.txt",
+    noColors: true,
+    // coinmarketcap: COINMARKETCAP_API_KEY,
+    currency: "USD",
   },
 };

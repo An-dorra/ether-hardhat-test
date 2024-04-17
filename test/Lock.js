@@ -10,7 +10,7 @@ describe("SimpleStorage", () => {
   });
   it("测试初始值是否为0", async () => {
     const currVal = await simpleContract.retrieve();
-    const testVal = "1";
+    const testVal = "0";
     // assert.equal(currVal.toString(), testVal);
     // expect;
     expect(currVal.toString()).to.equal(testVal);
