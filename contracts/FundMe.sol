@@ -58,6 +58,21 @@ contract FundMe {
         require(callSuccess, "Call failed");
     }
 
+    function cheapWithDraw() public payable onlyOwner {
+        address[] memory c_funders = funders;
+        uint256 len = c_funders.length;
+        for (uint i = 0; i < len; i++) {
+            address funder = c_funders[i];
+            addressToAmountFuned[funder] = 0;
+        }
+        funders = new address[](0);
+        (bool success, ) = payable(msg.sender).call{
+            value: address(this).balance
+        }("");
+
+        require(success, "Call failed");
+    }
+
     receive() external payable {
         fund();
     }

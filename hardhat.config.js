@@ -1,12 +1,18 @@
-require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-solhint");
+require("@nomicfoundation/hardhat-toolbox");
+require("dotenv/config");
+require("@nomicfoundation/hardhat-verify");
+require("hardhat-gas-reporter");
+
 require("hardhat-deploy");
-require("dotenv").config();
+require("@nomiclabs/hardhat-ethers");
 
 const { PRIVATE_KEY, SEPOLIA_URL, ETHERSCAN_API_KEY } = process.env;
 
 module.exports = {
-  solidity: "0.8.8",
+  solidity: {
+    compilers: [{ version: "0.8.9" }, { version: "0.6.6" }],
+  },
   defaultNetwork: "hardhat",
   networks: {
     localhost: {
@@ -27,5 +33,13 @@ module.exports = {
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
+  },
+  gasReporter: {
+    enabled: true,
+    outputFile: "gas-report.txt",
+    noColors: true,
+    // coinmarketcap: "COINMARKETCAP_API_KEY",
+    currency: "USD",
+    token: "MATIC",
   },
 };
